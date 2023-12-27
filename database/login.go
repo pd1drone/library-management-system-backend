@@ -2,17 +2,12 @@ package database
 
 import (
 	"fmt"
+	"lms/models"
 
 	"github.com/jmoiron/sqlx"
 )
 
-type LoginResponse struct {
-	ID       int64  `json:"ID"`
-	Username string `json:"Username"`
-	Password string `json:"Password"`
-}
-
-func Login(db sqlx.Ext, username string, password string) (*LoginResponse, error) {
+func Login(db sqlx.Ext, username string, password string) (*models.LoginResponsedb, error) {
 
 	counter := 0
 	var id int64
@@ -40,7 +35,7 @@ func Login(db sqlx.Ext, username string, password string) (*LoginResponse, error
 		return nil, fmt.Errorf("User does not exists")
 	}
 
-	return &LoginResponse{
+	return &models.LoginResponsedb{
 		ID:       id,
 		Username: user,
 		Password: pass,

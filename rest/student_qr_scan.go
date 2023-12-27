@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func (l *LMSConfig) Login(w http.ResponseWriter, r *http.Request) {
+func (l *LMSConfig) ScanStudentQR(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Methods", "*")
@@ -19,7 +19,7 @@ func (l *LMSConfig) Login(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		respondJSON(w, 500, &models.LoginResponse{
+		respondJSON(w, 500, &models.ScanStudentQRResponse{
 			Success:  false,
 			Message:  err.Error(),
 			Response: nil,
@@ -30,12 +30,12 @@ func (l *LMSConfig) Login(w http.ResponseWriter, r *http.Request) {
 	// Restore request body after reading
 	r.Body = io.NopCloser(bytes.NewBuffer(body))
 
-	req := &models.LoginRequest{}
+	req := &models.ScanStudentQR{}
 	fmt.Println(req)
 
 	err = json.Unmarshal(body, &req)
 	if err != nil {
-		respondJSON(w, 400, &models.LoginResponse{
+		respondJSON(w, 400, &models.ScanStudentQRResponse{
 			Success:  false,
 			Message:  err.Error(),
 			Response: nil,
@@ -43,9 +43,9 @@ func (l *LMSConfig) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	LoginData, err := database.Login(l.LMSdb, req.Username, req.Password)
+	ScanQRData, err := database.ScanStudentQR(l.LMSdb, req.StudentID)
 	if err != nil {
-		respondJSON(w, 200, &models.LoginResponse{
+		respondJSON(w, 200, &models.ScanStudentQRResponse{
 			Success:  false,
 			Message:  err.Error(),
 			Response: nil,
@@ -53,9 +53,9 @@ func (l *LMSConfig) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondJSON(w, 200, &models.LoginResponse{
+	respondJSON(w, 200, &models.ScanStudentQRResponse{
 		Success:  true,
 		Message:  "",
-		Response: LoginData,
+		Response: ScanQRData,
 	})
 }

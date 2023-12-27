@@ -65,6 +65,39 @@ func Routes() {
 	// Login route
 	r.Post("/login", newLMS.Login)
 
+	// Students route
+	r.Get("/students", newLMS.ReadStudents)
+	r.Delete("/students", newLMS.DeleteStudents)
+	r.Put("/students", newLMS.UpdateStudents)
+	r.Post("/students", newLMS.CreateStudents)
+
+	// Books route
+	r.Get("/books", newLMS.ReadBooks)
+	r.Delete("/books", newLMS.DeleteBooks)
+	r.Put("/books", newLMS.UpdateBooks)
+	r.Post("/books", newLMS.CreateBooks)
+
+	// Get Available Books
+	r.Get("/available_books", newLMS.ReadAvailableBooks)
+
+	// Borrow a book
+	r.Post("/borrow", newLMS.BorrowBook)
+
+	// Return a book
+	r.Post("/return", newLMS.ReturnBook)
+
+	// Read all borrowed books
+	r.Get("/all_borrowed_books", newLMS.ReadAllBorrowedBooks)
+
+	// Read borrowed books by student
+	r.Get("/borrowed_books/{ID}", newLMS.ReadBorrowedBooksByStudent)
+
+	// Read overdue books
+	r.Get("/overdue_books", newLMS.ReadOverdueBooks)
+
+	// Scan StudentID in RFID
+	r.Post("/scan", newLMS.ScanStudentQR)
+
 	log.Fatal(http.ListenAndServe("0.0.0.0:8090", r))
 }
 

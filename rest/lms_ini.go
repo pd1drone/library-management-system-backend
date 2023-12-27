@@ -9,7 +9,8 @@ import (
 )
 
 type LMSConfig struct {
-	LMSdb *sqlx.DB
+	LMSdb       *sqlx.DB
+	overdueDate int64
 }
 
 func New() (*LMSConfig, error) {
@@ -27,6 +28,9 @@ func New() (*LMSConfig, error) {
 	dbport := dbSection.Key("dbport").String()
 	dbname := dbSection.Key("dbname").String()
 
+	booksCfg := cfg.Section("books")
+	overdue := booksCfg.Key("overdue").MustInt64()
+
 	lmsdb, err := database.InitializeLMSDatabase(dbname, user, password, dbhost, dbport)
 	if err != nil {
 		return nil, err
@@ -34,5 +38,6 @@ func New() (*LMSConfig, error) {
 
 	return &LMSConfig{
 		lmsdb,
+		overdue,
 	}, nil
 }

@@ -31,7 +31,8 @@ CREATE TABLE `Books` (
   `Genre` varchar(255),
   `PublicationDate` varchar(255),
   `Publisher` varchar(255),
-  `Description` varchar(255)
+  `Description` varchar(255),
+  `IsAvailable` bool
 );
 
 CREATE TABLE `BorrowedBooks` (

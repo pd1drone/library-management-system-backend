@@ -12,4 +12,5 @@ type Students struct {
 	PhoneNumber       string `json:"PhoneNumber"`
 	RegistrationDate  string `json:"RegistrationDate"`
 	LibraryCardNumber string `json:"LibraryCardNumber"`
+	FullName          string `json:"FullName"`
 }

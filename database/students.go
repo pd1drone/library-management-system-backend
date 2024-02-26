@@ -198,6 +198,7 @@ func ReadStudentsByID(db sqlx.Ext, stdID int64) (*models.Students, error) {
 			PhoneNumber:       PhoneNumber,
 			RegistrationDate:  RegistrationDate,
 			LibraryCardNumber: LibraryCardNumber,
+			FullName:          FirstName + " " + MiddleName + " " + LastName,
 		}
 	}
 	return students, nil

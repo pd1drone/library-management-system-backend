@@ -98,6 +98,9 @@ func Routes() {
 	// Scan StudentID in RFID
 	r.Post("/scan", newLMS.ScanStudentQR)
 
+	r.Get("/overdue_books_csv", newLMS.ReadOverdueBooksCSV)
+	r.Get("/borrowed_books_csv", newLMS.ReadAllBorrowedBooksCSV)
+
 	log.Fatal(http.ListenAndServe("0.0.0.0:8090", r))
 }
 
